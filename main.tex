@@ -6,7 +6,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{fullpage}
-\usepackage[colorlinks]{hyperref}
+\usepackage[colorlinks=true,citecolor=blue]{hyperref}
 \usepackage{dsfont}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
@@ -34,9 +34,163 @@
 \renewcommand{\labelitemi}{$\bullet$}
 
 
-\section{}
+\section{The Kac-Rice formula}
 
+\subsection{The area formula}
+	The Kac-Rice formula is not derived from any involved probabilistic tools, but rather is a consequence of a deeper geometric result, called the area formula (itself a consequence of the coreao formula), described in more generality by Federer \cite{federer1959curvature}, and stated for instance in \cite{azais2009level}. This formula is the generalization of the following non-rigorous intuition: for a smooth function $f : \bbR \to \bbR$, and $T \subset \bbR$, denoting $N_f(u,T)$ the number of solutions to the equation $f(t) = u$ with $t \in T$, one would want to write informally:
+	\begin{align}
+	N_f(u,T) &= \int_{f(T)} \delta\left(v - u\right) \mathrm{d}v, \\
+	  &= \int_T \delta\left(f(t) - u\right) |f'(t)| \mathrm{d}t.
+	\end{align}
+	The area formula generalizes and makes rigorous this intuition, by showing a weak version of this equality. We follow here the statement of \cite{azais2009level}. 
+	\begin{proposition}[Area formula]\label{prop:area}
+	Let $f : U \to \bbR^d$ be a $\mathcal{C}^1$ function defined on an open subset $U$ of $\bbR^d$. Assume that the sets of critical values of $f$ has zero Lebesgue measure, and denote $N_f(u,T)$  the number of solutions to the equation $f(t) = u$ with $t \in T$. Then, for any Borel set $T \subset \bbR^d$, and any $g : \bbR^d \to \bbR$ continuous and bounded:
+	\begin{align}
+\int_{\bbR^d} g(u) N_f(u,T) &= \int_T \, \left|\det f'(t)\right| \, g(f(t)) \,\mathrm{d}t. 	
+	\end{align}
+	\end{proposition}
+	
+	
+	\subsection{Informal derivation of Kac-Rice}
+	
+	Consider a compact manifold $\mathcal{M}$ of dimension $n$, and a random function $f : \mathcal{M} \to \bbR$. We want to use the area formula~\ref{prop:area} to estimate the moments of the number of critical points of $f$. Given the hypotheses of Prop.~\ref{prop:area}, a reasonable hypothesis is to assume that $f$ is almost surely a \emph{Morse} function, i.e. that all its critical points are non-degenerate. Since $\mathcal{M}$ is compact, one easily deduces that the number of critical points of $f$ is finite. \footnote{Note that the numbers of critical points of $f$ of different indices are related to the topology of $\mathcal{M}$ by the Morse inequalities, see \cite{milnor1963morse} for a review on Morse theory.} For any $k \in \mathbb{N}$ and Borel set $B \subseteq \bbR$, we define $\mathrm{Crit}_{f,k}(B)$ to be the number of critical points $x \in \mathcal{M}$ of $f$ such that $f(x) \in B$ and such that the index of $\mathrm{Hess}\, f(x)$ is equal to $k$. Informally, one can write:
+	\begin{align}
+	\mathrm{Crit}_{f,k}(B) &= \int_{\mathcal{M}} \mathrm{\mu}_{\mathcal{M}}(\mathrm{d}x) \delta\left(\mathrm{grad}\, f(x)\right) \left|\det \, \mathrm{Hess}\, f(x)\right| \, \mathds{1}\left[f(x) \in B,\, \mathrm{i}\left(\mathrm{Hess}\, f(x)\right) = k\right]
+	\end{align}
+	
+	Taking the expectation of this equality, one obtains the Kac-Rice formula:
+	\begin{proposition}[Kac-Rice formula]\label{prop:KR}Denote  $\varphi_{\mathrm{grad}\, f(x)}(0)$ the density of $\mathrm{grad}\, f(x)$ taken at $0$. Then:
+	\begin{align*}
+	\EE \, \mathrm{Crit}_{f,k}(B) &= \int_{\mathcal{M}} \mathrm{\mu}_{\mathcal{M}}(\mathrm{d}x) \EE \left[\left|\det \, \mathrm{Hess}\, f(x)\right| \, \mathds{1}\left[f(x) \in B,\, \mathrm{i}\left(\mathrm{Hess}\, f(x)\right) = k\right] \middle| \mathrm{grad}\, f(x) = 0 \right] \varphi_{\mathrm{grad}\, f(x)}(0).
+	\end{align*}
+	\end{proposition}\vspace{0.cm}
+	
+	\paragraph{Remarks}:
+	\begin{enumerate}
+	\item The rigorous derivation of this formula is much more involved, as one has to start from the weak equality of Prop.~\ref{prop:area} and use continuity arguments in order to obtain an equality exactly at $u = 0$, see \cite{azais2009level}. This is one reason why the formula is mainly stated for Gaussian random fields, for which these arguments are easier to prove. The second is that in general, conditional expectations of non-Gaussian random variables are intractable. Under many technical conditions, one can however derive non-Gaussian versions of the Kac-Rice formula, stated for example as Thm.12.1.1 of \cite{adler2009random} or Thm.6.7 of \cite{azais2009level}. 
+	\item The difficulty of the Kac-Rice formula comes from the model of random matrices that arise from the distribution of the Hessian conditioned by the gradient being $0$. Even for Gaussian random fields, this is in general a heavily correlated Gaussian random matrix, for which very few results exist. 
+	\item The Kac-Rice formula can be stated to compute higher moments of the variable $\mathrm{Crit}_{f,k}(B)$ as well (Thm 6.3 of \cite{azais2009level}), and can therefore be used to compute the second moment of the complexity (see \cite{subag2017complexity} for an application to the spherical $p$-spin model) as well as perform heuristic replica calculations for the quenched complexity (see for instance \cite{ros2019complex}). 
+	\end{enumerate}
+	
+	\section{An application: annealed complexity of the pure spherical $p$-spin model}
+	
+	We essentially detail here a calculation performed by physicists, and made rigorous in \cite{auffinger2013random}. We follow here the derivation of this last paper. For anterior theoretical physics derivation of the complexity of similar models using the Kac-Rice formula, one can for instance read the works of Fyodorov: \cite{fyodorov2004complexity}, \cite{fyodorov2007replica}. 
+	
+	\subsection{Statement of the problem}
+	Consider $N \geq 1$, $p \geq 3$, and define the function $f_{N,p}$ on the unit sphere $\mathbb{S}^{N-1}$:
+	\begin{align}
+	f_{N,p}(\sigma) &\triangleq \sum_{1 \leq i_1,\cdots,i_p \leq N} J_{i_1,\cdots i_p} \sigma_{i_1} \cdots \sigma_{i_p},
+	\end{align}
+	in which $J_{i_1,\cdots i_p} \overset{i.i.d.}{\sim} \mathcal{N}(0,1)$. In physics terms, if $H_{N,p}$ is the Hamiltonian of the spherical $p$-spin model, one has $f_{N,p}(\sigma) = \frac{1}{\sqrt{N}} H_{N,p}(\sigma)$.  For any Borel set $B \subseteq \bbR$, we want to compute the large $N$ limit of the expectation of $\mathrm{Crit}_{N,p}^0(B)$, the number of local minima $\sigma$ of $f_{N,p}$ such that $f_{N,p}(\sigma) \in \sqrt{N} B$. 
+	A direct application of the Kac-Rice formula yields:
+	\begin{align*}
+	\EE \, \mathrm{Crit}_{N,p}^0(B) &= \int_{\mathbb{S}^{N-1}} \mu_N(\mathrm{d}\sigma) \varphi_{\mathrm{grad}\, f_{N,p}(\sigma)}(0) \, \EE \left[\left|\det \, \mathrm{Hess}\, f_{N,p}(\sigma)\right| \, \mathds{1}\left[f_{n,p}(\sigma) \in B,\, \mathrm{Hess}\, f_{N,p}(\sigma) \geq 0\right] \middle| \mathrm{grad}\, f_{N,p}(\sigma) = 0 \right],
+	\end{align*}
+in which $\mu_N$ is the usual surface measure on $\mathbb{S}^{N-1}$. Note that here $\mathrm{grad}$ and $\mathrm{Hess}$ denote the \emph{Riemannian} gradient and Hessian on the sphere. We denote $\nabla$, $\nabla^2$ the Euclidian gradient and Hessian. 
+	
+	\subsection{The distribution of $(f(\sigma),\mathrm{grad}\, f(\sigma),\mathrm{Hess}\, f(\sigma))$}
+	
+	We fix $\sigma  \in \mathbb{S}^{N-1}$. It is trivial to see that all three variables $(f(\sigma),\mathrm{grad}\, f(\sigma),\mathrm{Hess}\, f(\sigma))$ are Gaussian centered random variables. We thus simply compute their correlations. We identify the tangent space $\mathcal{T}_\sigma(\mathbb{S}^{N-1})$ with $\bbR^{N-1}$. If we denote $P_\sigma^\perp$ the orthogonal projector on $\{\sigma\}^\perp$, one has:
+	\begin{align}
+	\mathrm{grad}\, f(\sigma) &= P_\sigma^\perp \nabla f(\sigma), \\
+	\mathrm{Hess}\, f(\sigma) &= P_\sigma^\perp \nabla^2 f(\sigma) P_{\sigma}^\perp - \braket{\sigma,\nabla f(\sigma)} P_\sigma^\perp.
+	\end{align}
+	
+	So for instance:
+	
+	\begin{align*}
+	\EE \left[\mathrm{grad}\, f(\sigma) \mathrm{grad}\, f(\sigma)^\intercal \right] &=  P_\sigma^\perp\EE \left[\nabla f(\sigma) \nabla f(\sigma)^\intercal \right] P_\sigma^\perp, \\
+	&= p  P_\sigma^\perp.
+	\end{align*}
+	Uisng the same kind of calculation, one easily obtains that:
+	\begin{lemma}\label{lemma:joint}
+	The joint law of $(f(\sigma),\mathrm{grad}\, f(\sigma),\mathrm{Hess}\, f(\sigma))$ is the following:
+	\begin{align}
+	\begin{cases}
+	f(\sigma) &= Z \\
+	\mathrm{grad}\, f(\sigma) &= \sqrt{p} \bm{g} \\
+	\mathrm{Hess}\, f(\sigma) &= \sqrt{2 (N-1)p(p-1)} M_{N-1} - p Z \, \mathrm{Id}_{N-1}
+	\end{cases}
+	\end{align}
+	in which $Z \sim \mathcal{N}(0,1)$, $\bm{g} \sim \mathcal{N}(0,\mathrm{Id}_{N-1})$ , and $M_{N-1}$ is a GOE matrix of size $(N-1)$ with the convention $\EE M_{ij}^2 = \frac{1+\delta_{ij}}{2(N-1)}$. The variables $(Z,\bm{g},M_{N-1})$ are pairwise independent.
+	\end{lemma}
+	
+	One can make the following remarks:
+	\begin{enumerate}
+	\item The distribution of all variables is independent of $\sigma$.
+	\item The variables $(f,\mathrm{Hess}\, f)$ are independent from $\mathrm{grad}\,f$, so the conditioning in the Kac-Rice formula will be trivial.
+	\item From this distribution, one easily obtains:
+	\begin{align*}
+	 \varphi_{\mathrm{grad}\, f_{N,p}(\sigma)}(0) &= e^{- \frac{N-1}{2} \ln (2 \pi p)}.
+	\end{align*}
+	\end{enumerate}
+	
+	Noting that the volume of the unit spher $V(\mathbb{S}^{N-1}) = 2 \pi^{N/2} / \Gamma(N/2)$, one deduces from the Kac-Rice formula:
+	\begin{align}\label{eq:0}
+	\EE \, \mathrm{Crit}_{N,p}^0(B) &= \frac{2 \pi^{N/2}}{\Gamma(N/2)}e^{- \frac{N-1}{2} \ln (2 \pi p)} \left[2 (N-1)p(p-1)\right]^{\frac{N-1}{2}} \EE \left[|\det H_{N-1}| \mathds{1}(H_{N-1} \geq 0, \, z \in \sqrt{N} B)\right],
+	\end{align}
+	in which $H_{N-1} \triangleq M_{N-1} - \sqrt{\frac{p}{2 (N-1)(p-1)}} z$. $z$ is a standard Gaussian variable and $M_{N-1}$ is a GOE matrix of size $N-1$ (see Lemma.~\ref{lemma:joint}). It is now completely clear that we reduced a differential geometry problem (counting the number of critical points of a random function) to a random matrix theory problem. 
+	
+	\subsection{Simplification of the problem}
+	
+	It is clear from Eq.~\ref{eq:0} that the following lemma will be useful:
+	\begin{lemma}\label{lemma:simplification} Let $G \subseteq \bbR$ a Borel set, $X \sim \mathcal{N}(0,t^2)$ and $M_{N-1} \sim \mathrm{GOE}(N-1)$. Then:
+	\begin{align}
+	\EE &\left[|\det (M_{N-1} - X \mathrm{Id}_{N-1})| \mathds{1}( (M_{N-1} - X \mathrm{Id}_{N-1}) \geq 0, X \in G)\right] \nonumber \\
+	&\qquad = \frac{\Gamma\left(\frac{N}{2}\right)(N-1)^{-\frac{N}{2}}}{\sqrt{\pi t^2}} \EE_{\mathrm{GOE}(N)} \left[e^{\frac{N}{2}\left(\frac{1}{(N-1)t^2} - 1\right) \lambda_0^2} \mathds{1} \left(\lambda_0 \in \sqrt{\frac{N-1}{N}} G\right)\right].
+	\end{align}
+	In this equation, $\lambda_0$ is the smallest eigenvalue of a random matrix from the GOE$(N)$ ensemble. 
+	\end{lemma}
+
+	We do not prove this lemma here, as it is proven as a particular case of Lemma~3.3. of \cite{auffinger2013random}, which is proven in the same paper. Applying this lemma to Eq.~\ref{eq:0} with $t = \sqrt{\frac{p}{2 (N-1)(p-1)}}$ and  $G = (t\sqrt{N}) B$ yields:
+	\begin{align}\label{eq:1}
+	\EE \, \mathrm{Crit}_{N,p}^0(B) &= 2 \sqrt{\frac{2}{p}} (p-1)^{\frac{N}{2}} \EE_{\mathrm{GOE}(N)} \left[e^{-N \frac{p-2}{2p} \lambda_0^2} \mathds{1} \left(\lambda_0 \in  \sqrt{\frac{p}{2(p-1)}} B\right)\right]
+\end{align}		
+	
+	
+	\subsection{The large $N$ limit}
+	
+		
+	We are interested in the annealed limit complexity	$\lim_{N \to \infty} \frac{1}{N} \ln \EE \, \mathrm{Crit}_{N,p}^0(B)$. It it thus clear from Eq.~\ref{eq:1} that we need to study the large deviations for the smallest eigenvalue of a $\mathrm{GOE}(N)$ matrix. We state this result in an informal way, see Theorem A.1 of \cite{auffinger2013random} for a more precise statement:
+\begin{lemma}[Informal]\label{lemma:ldp}
+Let $\lambda_0$ be the smallest eigenvalue of a $\mathrm{GOE}(N)$ matrix, and $I \subseteq R$. Then
+\begin{align}
+\lim_{N \to \infty} \frac{1}{N} \ln \mathbb{P}\left[\lambda_0 \in I\right] &= - \sup_{x \in I} F(x),
+\end{align}
+with $F$ defined as:
+\begin{align}
+F(x) &\triangleq \begin{cases} \infty &\mathrm{if}\,x \geq -\sqrt{2}  \\
+ \frac{1}{\sqrt{2}} \int_{\sqrt{2}}^{-x} \mathrm{d}z\sqrt{\frac{z^2}{2} -1} & \mathrm{otherwise}
+\end{cases}.
+\end{align}
+\end{lemma}
+Using Lemma.~\ref{lemma:ldp} alongside Eq.~\ref{eq:1} yields a final estimate for the annealed complexity:
+\begin{align}\label{eq:2}
+\lim_{N \to \infty} \frac{1}{N} \ln \EE \, \mathrm{Crit}_{N,p}^0(B) &= \frac{1}{2} \ln (p-1) + \sup_{x \in \sqrt{\frac{p}{2(p-1)}} B} \left[-\frac{p-2}{2p}x^2 - F(x)\right].
+\end{align}
+	
+	\subsection{Description of the results}\label{subsec:summary}
+	
+	If one chooses in Eq.~\ref{eq:2}, $B = (-\infty,u)$ for $u \in \bbR$, one effectively counts the local minima of the $p$-spin of energy smaller than $Nu$. In this case, the supremum in Eq.~\ref{eq:2} can be analytically performed, and one obtains an analytical form for $\lim_{N \to \infty} \frac{1}{N} \ln \EE \, \mathrm{Crit}_{N,p}^0((-\infty,u))$.  We can perform the same calculation we did for fixed points of any fixed index $k \in \mathbb{N}$, and we can define:
+	\begin{align}
+	\Theta_k(u) \triangleq \lim_{N \to \infty} \frac{1}{N} \ln \EE \, \mathrm{Crit}_{N,p}^k((-\infty,u)).
+	\end{align}
+	There are analytical expressions for all $\Theta_k(u)$ functions, see Eq.2.16 of \cite{auffinger2013random}. Defining the \emph{threshold} energy $E_\infty \equiv 2 \sqrt{\frac{p-1}{p}}$, we can plot these functions, see Fig.~\ref{fig}.
+		\begin{figure}[h!]\label{fig}
+		\centering
+	\includegraphics[scale=0.4]{figure.pdf}
+	\caption{The functions $\Theta_k$ for the first indices}
+	\end{figure}
+
+	
+	\paragraph{Additional remarks}
+	\begin{enumerate}
+\item The minima always dominate for all energies below $-N E_\infty$, while for all energies above $-N E_\infty$, the complexity is dominated by critical points of diverging index.
+\item One can perform similar calculations for critical points with indices that diverge with $N$, see for the rigorous derivation \cite{auffinger2013complexity}.
+\item This calculation can also be generalized to the mixed spherical $p$-spin case, see \cite{auffinger2013complexity}, which exhaust all stationary isotropic Gaussian random fields on the sphere by Schoenberg's theorem.
+	\end{enumerate}
+	
  \bibliographystyle{alpha}
 \bibliography{refs}
-
 \end{document}
+	
