@@ -84,7 +84,7 @@
 	in which $J_{i_1,\cdots i_p} \overset{i.i.d.}{\sim} \mathcal{N}(0,1)$. In physics terms, if $H_{N,p}$ is the Hamiltonian of the spherical $p$-spin model (defined on $\mathbb{S}^{N-1}(\sqrt{N})$), one has $f_{N,p}(\sigma) = \frac{1}{\sqrt{N}} H_{N,p}(\sqrt{N}\sigma)$.  For any Borel set $B \subseteq \bbR$, we want to compute the large $N$ limit of the expectation of $\mathrm{Crit}_{N,p}^0(B)$, the number of local minima $\sigma$ of $f_{N,p}$ such that $f_{N,p}(\sigma) \in \sqrt{N} B$. 
 	A direct application of the Kac-Rice formula yields:
 	\begin{align*}
-	\EE \, \mathrm{Crit}_{N,p}^0(B) &= \int_{\mathbb{S}^{N-1}} \mu_N(\mathrm{d}\sigma) \varphi_{\mathrm{grad}\, f_{N,p}(\sigma)}(0) \, \EE \left[\left|\det \, \mathrm{Hess}\, f_{N,p}(\sigma)\right| \, \mathds{1}\left[f_{n,p}(\sigma) \in B,\, \mathrm{Hess}\, f_{N,p}(\sigma) \geq 0\right] \middle| \mathrm{grad}\, f_{N,p}(\sigma) = 0 \right],
+	\EE \, \mathrm{Crit}_{N,p}^0(B) &= \int_{\mathbb{S}^{N-1}} \mu_N(\mathrm{d}\sigma) \varphi_{\mathrm{grad}\, f_{N,p}(\sigma)}(0) \, \EE \left[\left|\det \, \mathrm{Hess}\, f_{N,p}(\sigma)\right| \, \mathds{1}\left[f_{n,p}(\sigma) \in \sqrt{N} B,\, \mathrm{Hess}\, f_{N,p}(\sigma) \geq 0\right] \middle| \mathrm{grad}\, f_{N,p}(\sigma) = 0 \right],
 	\end{align*}
 in which $\mu_N$ is the usual surface measure on $\mathbb{S}^{N-1}$. Note that here $\mathrm{grad}$ and $\mathrm{Hess}$ denote the \emph{Riemannian} gradient and Hessian on the sphere, while we will denote $\nabla$, $\nabla^2$ the Euclidian gradient and Hessian. 
 	
@@ -137,12 +137,12 @@ in which $\mu_N$ is the usual surface measure on $\mathbb{S}^{N-1}$. Note that h
 	\begin{lemma}\label{lemma:simplification} Let $G \subseteq \bbR$ a Borel set, $X \sim \mathcal{N}(0,t^2)$ (for a $t > 0$) and $M_{N-1} \sim \mathrm{GOE}(N-1)$. Then:
 	\begin{align}
 	\EE &\left[|\det (M_{N-1} - X \mathrm{Id}_{N-1})| \mathds{1}( (M_{N-1} - X \mathrm{Id}_{N-1}) \geq 0, X \in G)\right] \nonumber \\
-	&\qquad = \frac{\Gamma\left(\frac{N}{2}\right)(N-1)^{-\frac{N}{2}}}{\sqrt{\pi t^2}} \EE_{\mathrm{GOE}(N)} \left[e^{\frac{N}{2}\left(\frac{1}{(N-1)t^2} - 1\right) \lambda_0^2} \mathds{1} \left(\lambda_0 \in \sqrt{\frac{N-1}{N}} G\right)\right].
+	&\qquad = \frac{\Gamma\left(\frac{N}{2}\right)(N-1)^{-\frac{N}{2}}}{\sqrt{\pi t^2}} \EE_{\mathrm{GOE}(N)} \left[e^{-\frac{N}{2}\left(\frac{1}{(N-1)t^2} - 1\right) \lambda_0^2} \mathds{1} \left(\lambda_0 \in \sqrt{\frac{N-1}{N}} G\right)\right].
 	\end{align}
 	In this equation, $\lambda_0$ is the smallest eigenvalue of a random matrix from the GOE$(N)$ ensemble. 
 	\end{lemma}
 
-	We do not prove this lemma here, as it is proven as a particular case of Lemma~3.3. of \cite{auffinger2013random}, which is proven in the same paper. The idea of the proof is to write explicitly the joint law of the eigenvalues of $M_{N-1}$, denoted $\lambda_1 \leq \cdots \leq \lambda_{N-1}$, and to interpret $X$ as the smallest eigenvalue of a larger $\mathrm{GOE}(N)$ matrix with eigenvalues $X \leq \lambda_1 \leq \cdots \leq \lambda_{N-1}$, and use Selberg's integral.  Applying this lemma to Eq.~\ref{eq:0} with $t = \sqrt{\frac{p}{2 (N-1)(p-1)}}$ and  $G = (t\sqrt{N}) B$ yields the main result of the Kac-Rice formula:
+%	We do not prove this lemma here, as it is proven as a particular case of Lemma~3.3. of \cite{auffinger2013random}, which is proven in the same paper. The idea of the proof is to write explicitly the joint law of the eigenvalues of $M_{N-1}$, denoted $\lambda_1 \leq \cdots \leq \lambda_{N-1}$, and to interpret $X$ as the smallest eigenvalue of a larger $\mathrm{GOE}(N)$ matrix with eigenvalues $X \leq \lambda_1 \leq \cdots \leq \lambda_{N-1}$, and use Selberg's integral.  Applying this lemma to Eq.~\ref{eq:0} with $t = \sqrt{\frac{p}{2 (N-1)(p-1)}}$ and  $G = (t\sqrt{N}) B$ yields the main result of the Kac-Rice formula at finite $N$:
 	\begin{align}\label{eq:1}
 	\EE \, \mathrm{Crit}_{N,p}^0(B) &= 2 \sqrt{\frac{2}{p}} (p-1)^{\frac{N}{2}} \EE_{\mathrm{GOE}(N)} \left[e^{-N \frac{p-2}{2p} \lambda_0^2} \mathds{1} \left(\lambda_0 \in  \sqrt{\frac{p}{2(p-1)}} B\right)\right]
 \end{align}		
@@ -164,14 +164,14 @@ F(x) &\triangleq \begin{cases} \infty &\mathrm{if}\,x \geq -\sqrt{2}  \\
 \end{cases}.
 \end{align}
 \end{lemma}
-Using Lemma.~\ref{lemma:ldp} alongside Eq.~\ref{eq:1} directly yields a final estimate for the annealed complexity:
+Using Lemma.~\ref{lemma:ldp} alongside Eq.~\ref{eq:1} and Varadhan's lemma directly yields a final estimate for the annealed complexity:
 \begin{align}\label{eq:2}
 \lim_{N \to \infty} \frac{1}{N} \ln \EE \, \mathrm{Crit}_{N,p}^0(B) &= \frac{1}{2} \ln (p-1) + \sup_{x \in \sqrt{\frac{p}{2(p-1)}} B} \left[-\frac{p-2}{2p}x^2 - F(x)\right].
 \end{align}
 	
 	\subsection{Description of the results}\label{subsec:summary}
 	
-	If one chooses in Eq.~\ref{eq:2}, $B = (-\infty,u)$ for $u \in \bbR$, one effectively counts the local minima of the $p$-spin of extensive energy smaller than $Nu$. In this case, the supremum in Eq.~\ref{eq:2} can be analytically performed, and one obtains an analytical form for $\lim_{N \to \infty} \frac{1}{N} \ln \EE \, \mathrm{Crit}_{N,p}^0((-\infty,u))$. On can perform the same calculation we did for fixed points of any fixed index $k \in \mathbb{N}$ (see again \cite{auffinger2013random}), and if we define:
+	If one chooses in Eq.~\ref{eq:2}, $B = (-\infty,u)$ for $u \in \bbR$, one effectively counts the local minima of the $p$-spin of extensive energy smaller than $Nu$. In this case, the supremum in Eq.~\ref{eq:2} can be analytically performed, and one obtains an analytic form for $\lim_{N \to \infty} \frac{1}{N} \ln \EE \, \mathrm{Crit}_{N,p}^0((-\infty,u))$. On can perform the same calculation we did for fixed points of any fixed index $k \in \mathbb{N}$ (see again \cite{auffinger2013random}), and if we define:
 	\begin{align}
 	\Theta_k(u) \triangleq \lim_{N \to \infty} \frac{1}{N} \ln \EE \, \mathrm{Crit}_{N,p}^k((-\infty,u)),
 	\end{align}
